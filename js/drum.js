@@ -61,9 +61,24 @@ initModule = function (  ) {
     $(this).val($("<div>").html(txt).text());
     return false;
   } 
+  
+  onTouch = function(e) {
+    var i = this.id.substr(1);
+    if (this.id[0] == 'b') {
+      $(this).toggleClass("highlite");                                     // self
+      $(".controls #t"+i).removeClass("highlite");                         // other 
+      $(".diagram td#d"+i).text($(this).hasClass("highlite") ? 'B' : '.'); // diagram
+    } else if (this.id[0] == 't') {
+      $(this).toggleClass("highlite");                                     // self
+      $(".controls #b"+i).removeClass("highlite");                         // other
+      $(".diagram td#d"+i).text($(this).hasClass("highlite") ? 'T' : '.'); // diagram
+    }    
+    return false;
+  }
 /* end event handlers */   
 
   $( ".button" ).click( onClick );
+  $( ".controls td" ).click( onTouch );
   
   setup();
   
