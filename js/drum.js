@@ -1,18 +1,66 @@
 initModule = function (  ) {
 
 /* global variables */
-  var rhythm = "BB.TB.T."
+  var rhythms = {
+    "Baladi" : "BB.TB.T.",
+    "Fanga"  : "B..T.TT.B.B.TT..",
+    "custom" : "........"
+  }
 
 /* state variables */
   var playing = false;
   var beat = 0;
   var timer;
-  
+  var rhythm;
   
 /* setup */
-  setup = function() {
+  setup = function(rname) {
+    var html, r;
+    
+    // current rhythm
+    rhythm = rhythms[rname];
+
+    // reset    
+    playing = false;
+    beat = 0;
+    clearTimeout(timer);
+
+    html = '';
+    for (var i = 0; i < Object.keys(rhythms).length; i++) {
+      r = Object.keys(rhythms)[i];
+      html += '<option value="'+ r + '" '+(r == rname ? 'selected="selected"':'') +'>'+ r +'</option>';
+    }
+    $("#rhythm_selector").html(html);  
+    
+    //----------- html structures
+    html = '<th></th>';
+    for (var i = 0; i < rhythm.length; i++) {
+      html += '<td id="m'+ i +'"></td>';
+    } 
+    $(".metronome").html(html);
+    
+    html = '<th></th>';
+    for (var i = 0; i < rhythm.length; i++) {
+      html += '<td id="d'+ i +'"></td>';
+    } 
+    $(".diagram").html(html);
+    
+    html = '<th>B</th>';
+    for (var i = 0; i < rhythm.length; i++) {
+      html += '<td id="b'+ i +'"></td>';
+    } 
+    $(".controls.bass").html(html);
+    
+    html = '<th>T</th>';
+    for (var i = 0; i < rhythm.length; i++) {
+      html += '<td id="t'+ i +'"></td>';
+    } 
+    $(".controls.tone").html(html);
+    //----------- end html structures
+    
+    //----------- highlighting
     // button
-    $(".button").val($("<div>").html("&#9654;").text());
+    $("#play").val($("<div>").html("&#9654;").text());
     
     // metronome
     $("#m0").addClass("highlite");
@@ -28,6 +76,11 @@ initModule = function (  ) {
         $(".controls #t"+b).addClass("highlite");
       }
     }
+    //----------- end highlighting
+    
+    //----------- event handlers 
+    $( ".controls td" ).click( onTouch );
+    $( "#rhythm_selector" ).change( onRhythmSelect );
     return false;
   }
   
@@ -63,6 +116,7 @@ initModule = function (  ) {
   } 
   
   onTouch = function(e) {
+    $("#rhythm_selector").val('custom'); 
     var i = this.id.substr(1);
     if (this.id[0] == 'b') {
       $(this).toggleClass("highlite");                                     // self
@@ -75,11 +129,14 @@ initModule = function (  ) {
     }    
     return false;
   }
+  
+  onRhythmSelect = function(e) {
+    setup(this.options[this.selectedIndex].value);
+    return false;
+  }
 /* end event handlers */   
 
-  $( ".button" ).click( onClick );
-  $( ".controls td" ).click( onTouch );
-  
-  setup();
+  setup(Object.keys(rhythms)[0]);
+  $( "#play" ).click( onClick );
   
 };
