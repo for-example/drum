@@ -1,0 +1,70 @@
+body {
+  font : 14px Tahoma, Verdana, Helvetica, Arial, sans-serif;
+}
+
+
+
+#dashboard   {
+  width      : 400px;
+  margin     : auto;
+  margin-top : 30px;
+}
+
+#dashboard table {
+  border-collapse : collapse;
+  text-align : center;
+}
+
+.button {
+  margin-top  : -100px;
+  margin-right : 50px;
+  float       : right;
+  height      : 30px;
+  width       : 35px;
+  text-align  : center;
+}
+
+.metronome {
+  border-style : none;
+}
+
+.metronome td {
+  border           : 7px solid white;
+  background-color : lightGrey;
+  height           : 15px;
+}
+
+.metronome td.highlite {
+  background-color : lightGreen;
+}
+
+.diagram  td{
+  border          : 2px solid black;
+  border-collapse : collapse;
+  width           : 30px;
+  height          : 30px;
+}
+
+.diagram  th{
+  width : 50px;
+}
+
+.controls th{
+  width       : 50px;
+  height      : 30px;
+  font-weight : normal;
+}
+
+.controls td {
+  border           : 5px solid white;
+  background-color : lightGrey;
+}
+
+.controls td.highlite {
+  background-color : coral;
+}
+
+.separator {
+  height: 2px;
+}
+
