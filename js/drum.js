@@ -1,7 +1,7 @@
 initModule = function (  ) {
 
 /* global variables */
-  var beats = 8;
+  var rhythm = "BB.TB.T."
 
 /* state variables */
   var playing = false;
@@ -11,14 +11,30 @@ initModule = function (  ) {
   
 /* setup */
   setup = function() {
+    // button
     $(".button").val($("<div>").html("&#9654;").text());
+    
+    // metronome
     $("#m0").addClass("highlite");
+    
+    for (var b = 0; b < rhythm.length; b++) {
+      // diagram
+      $(".diagram td#d"+b).text(rhythm[b]);
+    
+      // controls
+      if (rhythm[b] == 'B') {
+        $(".controls #b"+b).addClass("highlite");
+      } else if (rhythm[b] == 'T') {
+        $(".controls #t"+b).addClass("highlite");
+      }
+    }
+    return false;
   }
   
 
 /* event handlers */  
   onTick = function(e) {
-    beat = (beat+1)%beats;
+    beat = (beat+1)%rhythm.length;
     $(".metronome td").removeClass("highlite");
     $(".metronome td#m"+beat).addClass("highlite");
     return false;
