@@ -6,12 +6,15 @@ initModule = function (  ) {
     "Fanga"  : "B..T.TT.B.B.TT..",
     "custom" : "........"
   }
+  var bass = new Audio('audio/bass.mp3');
+  var tone = new Audio('audio/tone.mp3');
 
 /* state variables */
   var playing = false;
   var beat = 0;
   var timer;
   var rhythm;
+
   
 /* setup */
   setup = function(rname) {
@@ -87,9 +90,14 @@ initModule = function (  ) {
 
 /* event handlers */  
   onTick = function(e) {
-    beat = (beat+1)%rhythm.length;
     $(".metronome td").removeClass("highlite");
     $(".metronome td#m"+beat).addClass("highlite");
+    if (rhythm[beat] == 'B') {
+      bass.play();
+    } else if (rhythm[beat] == 'T'){
+      tone.play();
+    }
+    beat = (beat+1)%rhythm.length;
     return false;
   }
   
