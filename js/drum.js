@@ -2,8 +2,16 @@ initModule = function (  ) {
 
 /* global variables */
   var rhythms = {
-    "Baladi" : "BB.TB.T.",
-    "Fanga"  : "B..T.TT.B.B.TT..",
+    "Ayuub"                 : "B..TB.T.",
+    "Baladi"                : "BB.TB.T.",
+    "Chiftetelli"           : "B..T..T.B.B.T...",
+    "Fanga"                 : "B..T.TT.B.B.TT..",
+    "Kakilambe - 4 beats"   : "B..TT.T.B.T.T.T.",
+    "Kakilambe - 6 beats"   : "B.TTT.BT.BT.",
+    "Linjin"                : "B.BTTT",
+    "Malfuf"                : "B..T..T.",
+    "Waltz"                 : "B.T.T.",
+    "Waltz - modified"      : "B.TTT.",
     "custom" : "........"
   }
   var bass = new Audio('audio/bass.mp3');
