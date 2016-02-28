@@ -31,6 +31,7 @@ initModule = function (  ) {
       html += '<option value="'+ r + '">'+ r +'</option>';
     }
     $("#rhythm_selector").html(html);
+    $("#play").val($("<div>").html("&#9654;").text());
     $( "#play" ).click( onClick );
   }
   
@@ -69,9 +70,6 @@ initModule = function (  ) {
     //----------- end html structures
     
     //----------- highlighting
-    // button
-    $("#play").val($("<div>").html("&#9654;").text());
-    
     // metronome
     $("#m0").addClass("highlite");
     
@@ -132,16 +130,19 @@ initModule = function (  ) {
   
   onTouch = function(e) {
     $("#rhythm_selector").val('custom'); 
-    var i = this.id.substr(1);
+    var i = this.id.substr(1), chr;
     if (this.id[0] == 'b') {
       $(this).toggleClass("highlite");                                     // self
+      chr = $(this).hasClass("highlite") ? 'B' : '.';
       $(".controls #t"+i).removeClass("highlite");                         // other 
-      $(".diagram td#d"+i).text($(this).hasClass("highlite") ? 'B' : '.'); // diagram
+      $(".diagram td#d"+i).text(chr);                                      // diagram
     } else if (this.id[0] == 't') {
       $(this).toggleClass("highlite");                                     // self
+      chr = $(this).hasClass("highlite") ? 'T' : '.';
       $(".controls #b"+i).removeClass("highlite");                         // other
-      $(".diagram td#d"+i).text($(this).hasClass("highlite") ? 'T' : '.'); // diagram
+      $(".diagram td#d"+i).text(chr);                                      // diagram
     }    
+    rhythm = rhythm.substr(0, i) + chr + rhythm.substr(Number(i)+1);
     return false;
   }
   
