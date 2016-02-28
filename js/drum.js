@@ -23,25 +23,24 @@ initModule = function (  ) {
   var timer;
   var rhythm;
 
+  /* setup */
+  setup_global = function() {
+    var html = '', r;
+    for (var i = 0; i < Object.keys(rhythms).length; i++) {
+      r = Object.keys(rhythms)[i];
+      html += '<option value="'+ r + '">'+ r +'</option>';
+    }
+    $("#rhythm_selector").html(html);
+    $( "#play" ).click( onClick );
+  }
   
-/* setup */
-  setup = function(rname) {
-    var html, r;
-    
-    // current rhythm
-    rhythm = rhythms[rname];
+  setup_rhythm = function() {
+    var html;
 
     // reset    
     playing = false;
     beat = 0;
     clearTimeout(timer);
-
-    html = '';
-    for (var i = 0; i < Object.keys(rhythms).length; i++) {
-      r = Object.keys(rhythms)[i];
-      html += '<option value="'+ r + '" '+(r == rname ? 'selected="selected"':'') +'>'+ r +'</option>';
-    }
-    $("#rhythm_selector").html(html);  
     
     //----------- html structures
     html = '<th></th>';
@@ -147,12 +146,14 @@ initModule = function (  ) {
   }
   
   onRhythmSelect = function(e) {
-    setup(this.options[this.selectedIndex].value);
+    var rname = $( "#rhythm_selector option:selected" ).text();
+    rhythm = rhythms[rname];
+    setup_rhythm();
     return false;
   }
 /* end event handlers */   
 
-  setup(Object.keys(rhythms)[0]);
-  $( "#play" ).click( onClick );
+  setup_global();
+  onRhythmSelect();
   
 };
