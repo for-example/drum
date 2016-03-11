@@ -16,12 +16,14 @@ initModule = function (  ) {
   }
   var bass = new Audio('audio/bass.mp3');
   var tone = new Audio('audio/tone.mp3');
+  var tempos = [120,132,144,156,168,176,180];
 
 /* state variables */
   var playing = false;
   var beat = 0;
   var timer;
   var rhythm;
+  var tempo;
 
   /* setup */
   setup_global = function() {
@@ -67,6 +69,12 @@ initModule = function (  ) {
       html += '<td id="t'+ i +'"></td>';
     } 
     $(".controls.tone").html(html);
+    
+    html = '';
+    for (var i = 0; i < tempos.length; i++) {
+      html += '<option value="'+ tempos[i] + '">'+ tempos[i] +' bpm</option>';
+    }
+    $("#tempo").html(html);
     //----------- end html structures
     
     //----------- highlighting
@@ -89,6 +97,8 @@ initModule = function (  ) {
     //----------- event handlers 
     $( ".controls td" ).click( onTouch );
     $( "#rhythm_selector" ).change( onRhythmSelect );
+    $( "#tempo" ).change( onTempoSelect );
+    onTempoSelect();
     return false;
   }
   
@@ -119,7 +129,7 @@ initModule = function (  ) {
     playing = ! playing;
     if (playing) {
       txt = "&#9724;";
-      timer = setInterval(onTick, 500);
+      timer = setInterval(onTick, Math.round(1000*60/tempo));
     } else {
       txt = "&#9654;";
       onStop();
@@ -150,6 +160,13 @@ initModule = function (  ) {
     var rname = $( "#rhythm_selector option:selected" ).text();
     rhythm = rhythms[rname];
     setup_rhythm();
+    return false;
+  }
+  
+  onTempoSelect = function(e) {
+    tempo = $( "#tempo option:selected" ).val();
+    $( "#play" ).click();
+    $( "#play" ).click();
     return false;
   }
 /* end event handlers */   
