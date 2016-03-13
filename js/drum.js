@@ -6,13 +6,16 @@ initModule = function (  ) {
     "Baladi"                : "BB.TB.T.",
     "Chiftetelli"           : "B..T..T.B.B.T...",
     "Fanga"                 : "B..T.TT.B.B.TT..",
-    "Kakilambe - 4 beats"   : "B..TT.T.B.T.T.T.",
-    "Kakilambe - 6 beats"   : "B.TTT.BT.BT.",
+    "Kakilambe 4 beat"      : "B..TT.T.B.T.T.T.",
+    "Kakilambe 6 beat"      : "B.TTT.BT.BT.",
     "Linjin"                : "B.BTTT",
     "Malfuf"                : "B..T..T.",
     "Waltz"                 : "B.T.T.",
     "Waltz - modified"      : "B.TTT.",
-    "custom" : "........"
+    "custom 6 beat"         : "........",
+    "custom 8 beat"         : "........",
+    "custom 16 beat"        : "................",
+    "custom 32 beat"        : "................................"
   }
   var bass = new Audio('audio/bass.mp3');
   var tone = new Audio('audio/tone.mp3');
@@ -72,13 +75,10 @@ initModule = function (  ) {
     
     html = '';
     for (var i = 0; i < tempos.length; i++) {
-      html += '<option value="'+ tempos[i] +'" ';
-      if (tempos[i] == tempo) {
-        html += 'selected="selected"' ;
-      }
-      html += ' >'+ tempos[i] +' bpm</option>';
+      html += '<option value="'+ tempos[i] +'" >'+ tempos[i] +' bpm</option>';
     }
     $("#tempo").html(html);
+    $("#tempo").val(tempo)
     //----------- end html structures
     
     //----------- highlighting
@@ -143,7 +143,8 @@ initModule = function (  ) {
   } 
   
   onTouch = function(e) {
-    $("#rhythm_selector").val('custom'); 
+    var custom_rname = 'custom ' + rhythm.length + ' beat';
+    $("#rhythm_selector").val(custom_rname); 
     var i = this.id.substr(1), chr;
     if (this.id[0] == 'b') {
       $(this).toggleClass("highlite");                                     // self
