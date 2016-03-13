@@ -10,16 +10,13 @@ initModule = function (  ) {
     "Kakilambe 6 beat"      : "B.TTT.BT.BT.",
     "Linjin"                : "B.BTTT",
     "Malfuf"                : "B..T..T.",
+    "Malfuf with turnaround": "B..T..T.B..T..T.B..T..T.B.B.T...",
     "Waltz"                 : "B.T.T.",
-    "Waltz - modified"      : "B.TTT.",
-    "custom 6 beat"         : "........",
-    "custom 8 beat"         : "........",
-    "custom 16 beat"        : "................",
-    "custom 32 beat"        : "................................"
+    "Waltz - modified"      : "B.TTT."
   }
   var bass = new Audio('audio/bass.mp3');
   var tone = new Audio('audio/tone.mp3');
-  var tempos = [120,132,144,156,168,176,180];
+  var tempos = [120,132,144,156,168,176,180,240];
 
 /* state variables */
   var playing = false;
@@ -30,11 +27,23 @@ initModule = function (  ) {
 
   /* setup */
   setup_global = function() {
-    var html = '', r;
+    var html = '', rname, r, custom_beats = [];
+    
     for (var i = 0; i < Object.keys(rhythms).length; i++) {
-      r = Object.keys(rhythms)[i];
-      html += '<option value="'+ r + '">'+ r +'</option>';
+      rname = Object.keys(rhythms)[i];
+      html += '<option value="'+ rname + '">'+ rname +'</option>';
+      r = rhythms[rname];
+      if ($.inArray(r.length, custom_beats) == -1) {
+        custom_beats.push(r.length);
+      }
     }
+    
+    custom_beats = custom_beats.sort(function(a, b){return a-b});
+    for (var i = 0; i < custom_beats.length; i++) {
+      rname = 'custom ' + custom_beats[i] + ' beat';
+      html += '<option value="'+ rname + '">' + rname + '</option>';
+    }
+    
     $("#rhythm_selector").html(html);
     $("#play").val($("<div>").html("&#9654;").text());
     $( "#play" ).click( onClick );
