@@ -72,7 +72,11 @@ initModule = function (  ) {
     
     html = '';
     for (var i = 0; i < tempos.length; i++) {
-      html += '<option value="'+ tempos[i] + '">'+ tempos[i] +' bpm</option>';
+      html += '<option value="'+ tempos[i] +'" ';
+      if (tempos[i] == tempo) {
+        html += 'selected="selected"' ;
+      }
+      html += ' >'+ tempos[i] +' bpm</option>';
     }
     $("#tempo").html(html);
     //----------- end html structures
