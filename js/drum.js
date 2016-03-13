@@ -15,7 +15,11 @@ initModule = function (  ) {
     "Waltz - modified"      : "B.TTT."
   }
   var bass = new Audio('audio/bass.mp3');
+  var bass1 = new Audio('audio/bass.mp3');
+  
   var tone = new Audio('audio/tone.mp3');
+  var tone1 = new Audio('audio/tone.mp3');
+  
   var tempos = [120,132,144,156,168,176,180,240];
 
 /* state variables */
@@ -121,9 +125,9 @@ initModule = function (  ) {
     $(".metronome td").removeClass("highlite");
     $(".metronome td#m"+beat).addClass("highlite");
     if (rhythm[beat] == 'B') {
-      bass.play();
+      (beat%2 == 0 ? bass.play() : bass1.play());
     } else if (rhythm[beat] == 'T'){
-      tone.play();
+      (beat%2 == 0 ? tone.play() : tone1.play());
     }
     beat = (beat+1)%rhythm.length;
     return false;
