@@ -44,7 +44,7 @@ initModule = function (  ) {
     
     custom_beats = custom_beats.sort(function(a, b){return a-b});
     for (var i = 0; i < custom_beats.length; i++) {
-      rname = 'custom ' + custom_beats[i] + ' beat';
+      rname = custom_rname(custom_beats[i]);
       rhythms[rname] = Array(custom_beats[i] + 1).join(".");
       html += '<option value="'+ rname + '">' + rname + '</option>';
     }
@@ -157,8 +157,7 @@ initModule = function (  ) {
   } 
   
   onTouch = function(e) {
-    var custom_rname = 'custom ' + rhythm.length + ' beat';
-    $("#rhythm_selector").val(custom_rname); 
+    $("#rhythm_selector").val(custom_rname(rhythm.length));
     var i = this.id.substr(1), chr;
     if (this.id[0] == 'b') {
       $(this).toggleClass("highlite");                                     // self
@@ -189,6 +188,12 @@ initModule = function (  ) {
     return false;
   }
 /* end event handlers */   
+
+/* end utility */
+  custom_rname = function(num_beats) {
+    return('custom ' + num_beats + ' beat');
+  }
+/* end utility */ 
 
   setup_global();
   onRhythmSelect();
