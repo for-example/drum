@@ -2,17 +2,18 @@ initModule = function (  ) {
 
 /* global variables */
   var rhythms = {
-    "Ayuub"                 : "B..TB.T.",
-    "Baladi"                : "BB.TB.T.",
-    "Chiftetelli"           : "B..T..T.B.B.T...",
-    "Fanga"                 : "B..T.TT.B.B.TT..",
-    "Kakilambe 4 beat"      : "B..TT.T.B.T.T.T.",
-    "Kakilambe 6 beat"      : "B.TTT.BT.BT.",
-    "Linjin"                : "B.BTTT",
-    "Malfuf"                : "B..T..T.",
-    "Malfuf with turnaround": "B..T..T.B..T..T.B..T..T.B.B.T...",
-    "Waltz"                 : "B.T.T.",
-    "Waltz - modified"      : "B.TTT."
+    "Ayuub"                 : "|B..T|B.T.|",
+    "Baladi"                : "|BB|.T|B.|T.|",
+    "Chiftetelli"           : "|B.|.T|..|T.|B.|B.|T.|..|",
+    "Fanga"                 : "|B..T|.TT.|B.B.|TT..|",
+    "Kakilambe 4 beat"      : "|B..T|T.T.|B.T.|T.T.|",
+    "Kakilambe 6 beat"      : "|B.|TT|T.|BT|.B|T.|",
+    "Linjin"                : "|B.B|TTT|",
+    "Malfuf"                : "|B..T|..T.|",
+    "Malfuf with turnaround": "|B..T|..T.|B..T|..T.|B..T|..T.|B.B.|T...|",
+    "Waltz"                 : "|B.|T.|T.|",
+    "Waltz - modified"      : "|B.|TT|T.|",
+    "3-2 son clave"         : "|T..T|..T.|..T.|T...|"
   }
   var bass = new Audio('audio/bass.mp3');
   var bass1 = new Audio('audio/bass.mp3');
@@ -36,7 +37,7 @@ initModule = function (  ) {
     for (var i = 0; i < Object.keys(rhythms).length; i++) {
       rname = Object.keys(rhythms)[i];
       html += '<option value="'+ rname + '">'+ rname +'</option>';
-      r = rhythms[rname];
+      r =  no_dividers(rhythms[rname]);
       if ($.inArray(r.length, custom_beats) == -1) {
         custom_beats.push(r.length);
       }
@@ -176,7 +177,7 @@ initModule = function (  ) {
   
   onRhythmSelect = function(e) {
     var rname = $( "#rhythm_selector option:selected" ).text();
-    rhythm = rhythms[rname];
+    rhythm = no_dividers(rhythms[rname]);
     setup_rhythm();
     return false;
   }
@@ -192,6 +193,9 @@ initModule = function (  ) {
 /* end utility */
   custom_rname = function(num_beats) {
     return('custom ' + num_beats + ' beat');
+  }
+  no_dividers = function(pattern) {
+    return(pattern.replace(/\|/g, ''));
   }
 /* end utility */ 
 
