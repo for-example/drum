@@ -15,13 +15,15 @@ initModule = function (  ) {
     "Waltz - modified"      : "|B.|TT|T.|",
     "3-2 son clave"         : "|T..T|..T.|..T.|T...|"
   }
-  var bass = new Audio('audio/bass.mp3');
-  var bass1 = new Audio('audio/bass.mp3');
+  var bass = Array(32);
+  var tone = Array(32);
   
-  var tone = new Audio('audio/tone.mp3');
-  var tone1 = new Audio('audio/tone.mp3');
+  for (var i = 0; i < bass.length; i++) {
+    bass[i] = new Audio('audio/bass.mp3');
+    tone[i] = new Audio('audio/tone.mp3');
+  }
   
-  var tempos = [120,132,144,156,168,176,180,240];
+  var tempos = [120,132,144,156,168,176,180,240,360,480];
 
 /* state variables */
   var playing = false;
@@ -135,9 +137,9 @@ initModule = function (  ) {
     $(".metronome td").removeClass("highlite");
     $(".metronome td#m"+beat).addClass("highlite");
     if (current_rhythm[beat] == 'B') {
-      (beat%2 == 0 ? bass.play() : bass1.play());
+      bass[beat].play();
     } else if (current_rhythm[beat] == 'T'){
-      (beat%2 == 0 ? tone.play() : tone1.play());
+      tone[beat].play();
     }
     beat = (beat+1)%current_rhythm.length;
     return false;
