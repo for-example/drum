@@ -50,10 +50,17 @@ body {
 }
 
 .diagram  td{
-  border          : 2px solid black;
+  border-top      : 2px solid black;
+  border-bottom   : 2px solid black;
   border-collapse : collapse;
   width           : 30px;
   height          : 30px;
+}
+.diagram td.leftb {
+  border-left     : 2px solid black;
+}
+.diagram td.rightb {
+  border-right     : 2px solid black;
 }
 
 .diagram  th{

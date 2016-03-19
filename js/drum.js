@@ -28,6 +28,7 @@ initModule = function (  ) {
   var beat = 0;
   var timer;
   var current_rhythm;
+  var beats_per_measure;
   var tempo;
 
   /* setup */
@@ -103,6 +104,13 @@ initModule = function (  ) {
     for (var b = 0; b < current_rhythm.length; b++) {
       // diagram
       $(".diagram td#d"+b).text(current_rhythm[b]);
+      
+      if (b%beats_per_measure == 0) {
+        $(".diagram td#d"+b).addClass( "leftb" );
+      }
+      if (b == current_rhythm.length - 1) {
+        $(".diagram td#d"+b).addClass( "rightb" );
+      }
     
       // controls
       if (current_rhythm[b] == 'B') {
@@ -178,6 +186,7 @@ initModule = function (  ) {
   onRhythmSelect = function(e) {
     var rname = $( "#rhythm_selector option:selected" ).text();
     current_rhythm = no_dividers(rhythms[rname]);
+    beats_per_measure = measure(rhythms[rname]);
     setup_rhythm();
     return false;
   }
@@ -196,6 +205,9 @@ initModule = function (  ) {
   }
   no_dividers = function(pattern) {
     return(pattern.replace(/\|/g, ''));
+  }
+  measure = function(pattern) {
+    return(pattern.indexOf('|',1) - 1);
   }
 /* end utility */ 
 
