@@ -23,7 +23,7 @@ initModule = function (  ) {
     tone[i] = new Audio('audio/tone.mp3');
   }
   
-  var tempos = [120,132,144,156,168,176,180,240,360,480];
+  var tempos = [120,144,180,240,300,360,480];
 
 /* state variables */
   var playing = false;
@@ -31,7 +31,7 @@ initModule = function (  ) {
   var timer;
   var current_rhythm;
   var beats_per_measure;
-  var tempo;
+  var tempo = 180;
 
   /* setup */
   setup_global = function() {
@@ -96,7 +96,7 @@ initModule = function (  ) {
       html += '<option value="'+ tempos[i] +'" >'+ tempos[i] +' bpm</option>';
     }
     $("#tempo").html(html);
-    $("#tempo").val(tempo)
+    $("#tempo").val(tempo);
     //----------- end html structures
     
     //----------- highlighting
