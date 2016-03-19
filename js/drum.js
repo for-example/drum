@@ -47,7 +47,7 @@ initModule = function (  ) {
     custom_beats = custom_beats.sort(function(a, b){return a-b});
     for (var i = 0; i < custom_beats.length; i++) {
       rname = custom_rname(custom_beats[i]);
-      rhythms[rname] = Array(custom_beats[i] + 1).join(".");
+      rhythms[rname] = Array(custom_beats[i] + 1).fill("|").join(".");
       html += '<option value="'+ rname + '">' + rname + '</option>';
     }
     
