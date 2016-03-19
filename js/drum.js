@@ -27,7 +27,7 @@ initModule = function (  ) {
   var playing = false;
   var beat = 0;
   var timer;
-  var rhythm;
+  var current_rhythm;
   var tempo;
 
   /* setup */
@@ -65,25 +65,25 @@ initModule = function (  ) {
     
     //----------- html structures
     html = '<th></th>';
-    for (var i = 0; i < rhythm.length; i++) {
+    for (var i = 0; i < current_rhythm.length; i++) {
       html += '<td id="m'+ i +'"></td>';
     } 
     $(".metronome").html(html);
     
     html = '<th></th>';
-    for (var i = 0; i < rhythm.length; i++) {
+    for (var i = 0; i < current_rhythm.length; i++) {
       html += '<td id="d'+ i +'"></td>';
     } 
     $(".diagram").html(html);
     
     html = '<th>B</th>';
-    for (var i = 0; i < rhythm.length; i++) {
+    for (var i = 0; i < current_rhythm.length; i++) {
       html += '<td id="b'+ i +'"></td>';
     } 
     $(".controls.bass").html(html);
     
     html = '<th>T</th>';
-    for (var i = 0; i < rhythm.length; i++) {
+    for (var i = 0; i < current_rhythm.length; i++) {
       html += '<td id="t'+ i +'"></td>';
     } 
     $(".controls.tone").html(html);
@@ -100,14 +100,14 @@ initModule = function (  ) {
     // metronome
     $("#m0").addClass("highlite");
     
-    for (var b = 0; b < rhythm.length; b++) {
+    for (var b = 0; b < current_rhythm.length; b++) {
       // diagram
-      $(".diagram td#d"+b).text(rhythm[b]);
+      $(".diagram td#d"+b).text(current_rhythm[b]);
     
       // controls
-      if (rhythm[b] == 'B') {
+      if (current_rhythm[b] == 'B') {
         $(".controls #b"+b).addClass("highlite");
-      } else if (rhythm[b] == 'T') {
+      } else if (current_rhythm[b] == 'T') {
         $(".controls #t"+b).addClass("highlite");
       }
     }
@@ -126,12 +126,12 @@ initModule = function (  ) {
   onTick = function(e) {
     $(".metronome td").removeClass("highlite");
     $(".metronome td#m"+beat).addClass("highlite");
-    if (rhythm[beat] == 'B') {
+    if (current_rhythm[beat] == 'B') {
       (beat%2 == 0 ? bass.play() : bass1.play());
-    } else if (rhythm[beat] == 'T'){
+    } else if (current_rhythm[beat] == 'T'){
       (beat%2 == 0 ? tone.play() : tone1.play());
     }
-    beat = (beat+1)%rhythm.length;
+    beat = (beat+1)%current_rhythm.length;
     return false;
   }
   
@@ -158,7 +158,7 @@ initModule = function (  ) {
   } 
   
   onTouch = function(e) {
-    $("#rhythm_selector").val(custom_rname(rhythm.length));
+    $("#rhythm_selector").val(custom_rname(current_rhythm.length));
     var i = this.id.substr(1), chr;
     if (this.id[0] == 'b') {
       $(this).toggleClass("highlite");                                     // self
@@ -171,13 +171,13 @@ initModule = function (  ) {
       $(".controls #b"+i).removeClass("highlite");                         // other
       $(".diagram td#d"+i).text(chr);                                      // diagram
     }    
-    rhythm = rhythm.substr(0, i) + chr + rhythm.substr(Number(i)+1);
+    current_rhythm = current_rhythm.substr(0, i) + chr + current_rhythm.substr(Number(i)+1);
     return false;
   }
   
   onRhythmSelect = function(e) {
     var rname = $( "#rhythm_selector option:selected" ).text();
-    rhythm = no_dividers(rhythms[rname]);
+    current_rhythm = no_dividers(rhythms[rname]);
     setup_rhythm();
     return false;
   }
